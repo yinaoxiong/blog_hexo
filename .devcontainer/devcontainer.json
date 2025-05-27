@@ -1,0 +1,30 @@
+{
+    "name": "yax hexo blog container",
+    // "build": {
+    //     "dockerfile": "Dockerfile",
+    //     "context": "..",
+    //     "args": {
+    //         "UBUNTU_VERSION": "24.04",
+    //         "VOLTA_VERSION": "2.0.2"
+    //     }
+    // },
+    "image": "yinaoxiong/blog_hexo:base",
+    // 将工作区文件夹挂载到容器的 /workspace 目录
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/workspace",
+    "mounts": [
+        "source=hexo-node-modules,target=/workspace/node_modules,type=volume"
+    ],
+    "forwardPorts": [
+        4000
+    ],
+    // VS Code 扩展
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "eamodio.gitlens"
+            ]
+        }
+    },
+    "remoteUser": "ubuntu"
+}
