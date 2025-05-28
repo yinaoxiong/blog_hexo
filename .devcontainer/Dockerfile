@@ -18,11 +18,16 @@ RUN \
     curl \
     git \
     wget \
+    sudo \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 
 SHELL ["/bin/bash", "-c"]
+
+# 添加 ubuntu 用户到 sudo 组,并将ubuntu的密码设置111111
+RUN usermod -aG sudo ubuntu \
+    && echo "ubuntu:111111" | chpasswd
 
 USER ubuntu
 
@@ -44,25 +49,24 @@ RUN \
     && volta --version
 
 
-ARG NODE_VERSION=12.4.0
-ARG NPM_VERSION=7.10.0
+ARG NODE_VERSION=22.16.0
+ARG PNPM_VERSION=10.11.0
 
-# install target node version and npm
+# install target node version and pnpm
 RUN \
     volta install node@${NODE_VERSION} \
-    && volta install npm@${NPM_VERSION} \
+    && volta install pnpm@${PNPM_VERSION} \
     # Test install
     && node --version \
-    && npm --version
+    && pnpm --version
 
 # 设置工作目录
 WORKDIR /workspace
 
-# 复制 package.json 和 package-lock.json
-COPY package*.json ./
+COPY package*.json pnpm-lock.yaml ./
 
 RUN \
     # 安装依赖
-    npm ci \
+    pnpm install --frozen-lockfile --prefer-offline \
     # 清理缓存
-    && npm cache clean --force
+    && pnpm store prune
