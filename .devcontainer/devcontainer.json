@@ -8,7 +8,7 @@
     //         "VOLTA_VERSION": "2.0.2"
     //     }
     // },
-    "image": "yinaoxiong/blog_hexo:base",
+    "image": "ghcr.io/yinaoxiong/blog_hexo:base",
     // 将工作区文件夹挂载到容器的 /workspace 目录
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
     "workspaceFolder": "/workspace",
@@ -26,5 +26,10 @@
             ]
         }
     },
-    "remoteUser": "ubuntu"
+    "remoteUser": "ubuntu",
+    "containerEnv": {
+        "HTTP_PROXY": "http://host.docker.internal:7890",
+        "HTTPS_PROXY": "http://host.docker.internal:7890",
+        "NO_PROXY": "localhost,127.0.0.1" // Add any other necessary exclusions
+    }
 }

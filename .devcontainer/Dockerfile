@@ -19,8 +19,17 @@ RUN \
     git \
     wget \
     sudo \
+    locales \
+    openssh-client gnupg2 \
     --no-install-recommends \
+    # 配置区域设置
+    && locale-gen en_US.UTF-8 \
+    && update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
+
+# 设置环境变量
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 
 SHELL ["/bin/bash", "-c"]
