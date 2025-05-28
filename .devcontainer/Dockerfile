@@ -34,9 +34,7 @@ ENV LC_ALL=en_US.UTF-8
 
 SHELL ["/bin/bash", "-c"]
 
-# 添加 ubuntu 用户到 sudo 组,并将ubuntu的密码设置111111
-RUN usermod -aG sudo ubuntu \
-    && echo "ubuntu:111111" | chpasswd
+RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER ubuntu
 

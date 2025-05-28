@@ -27,9 +27,12 @@
         }
     },
     "remoteUser": "ubuntu",
+    "postCreateCommand": "sudo chown -R $(whoami):$(whoami) /workspace",
     "containerEnv": {
         "HTTP_PROXY": "http://host.docker.internal:7890",
         "HTTPS_PROXY": "http://host.docker.internal:7890",
+        "http_proxy": "http://host.docker.internal:7890",
+        "https_proxy": "http://host.docker.internal:7890",
         "NO_PROXY": "localhost,127.0.0.1" // Add any other necessary exclusions
     }
 }
